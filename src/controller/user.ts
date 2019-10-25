@@ -1,19 +1,18 @@
-import express,{ Request } from 'express'
+import express,{ Request, Response } from 'express'
 import util from '../lib/util'
 import { insertUser } from '../service/transaction'
 import multer from 'multer'
 import userService from '../service/user'
-import { Res } from '../types/global'
 const router = express.Router()
 
-router.get('/', (req:Request, res:Res)=>{
+router.get('/', (req:Request, res:Response)=>{
   res.render('login', {
     title: '登录'
   })
 })
 
 // 事务测试
-router.get('/trans', async (req:Request, res:Res, next) => {
+router.get('/trans', async (req:Request, res:Response, next) => {
   const userId = await insertUser({
     name: '正式的',
     userMail: '123131@qq.com',
@@ -24,12 +23,12 @@ router.get('/trans', async (req:Request, res:Res, next) => {
   })
 })
 
-router.get('/err', (req:Request, res:Res) => {
+router.get('/err', (req:Request, res:Response) => {
   res.send('err')
 })
 
 // 验证码
-router.get('/vcode', (req:Request, res:Res) => {
+router.get('/vcode', (req:Request, res:Response) => {
   const svgCaptcha = require('svg-captcha')
   const captcha = svgCaptcha.create({
     color: '#0080ff',
@@ -43,7 +42,7 @@ router.get('/vcode', (req:Request, res:Res) => {
 })
 
 // 登录操作
-router.post('/login', async (req, res:Res) => {
+router.post('/login', async (req, res:Response) => {
   // 上传文件
   const upload = multer({
     dest: util.pathRoot('.temp/upload'),
@@ -69,20 +68,20 @@ router.post('/login', async (req, res:Res) => {
 })
 
 // 看看json和jsonp请求
-router.post('/json', (req:Request, res:Res) => {
+router.post('/json', (req:Request, res:Response) => {
   res.json({
     data: req.body
   })
 })
 
 // 获取列表
-router.get('/list', async (req:Request, res:Res) => {
+router.get('/list', async (req:Request, res:Response) => {
   const dataList = await userService.getList(parseInt(req.query.count))
   res.resp.list(dataList.result, dataList.total)
 })
 
 // 添加一个用户
-router.get('/add', async (req:Request, res:Res) => {
+router.get('/add', async (req:Request, res:Response) => {
   const info = {
     name: req.query.name,
     userMail: req.query.mail,

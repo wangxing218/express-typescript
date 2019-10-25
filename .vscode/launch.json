@@ -4,7 +4,6 @@
   // 欲了解更多信息，请访问: https://go.microsoft.com/fwlink/?linkid=830387
   "version": "0.2.0",
   "configurations": [{
-      "preLaunchTask": "tsc-watch",
       "type": "node",
       "request": "launch",
       "name": "express-typescript",
@@ -13,7 +12,7 @@
       "restart": true,
       "port": 13729,
       "console": "integratedTerminal",
-      "timeout": 5000,
+      "timeout": 20000,
       "env": {
         "NODE_DEBUG_PORT": "13729"
       },

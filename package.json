@@ -1,15 +1,14 @@
 {
-  "name": "express-framework",
+  "name": "express-typescript",
   "main": "app.js",
   "version": "1.0.0",
   "description": "基于express的后台开发框架",
   "license": "MIT",
   "repository": "https://github.com/wangxing218/express-framework",
   "scripts": {
-    "watch": "tsc -w",
     "start": "npm run dev",
-    "dev": "node watcher.js",
-    "build": "tsc",
+    "dev": "node bin/dev.js",
+    "build": "node bin/build.js",
     "test": "pm2 start pm2.json --env test",
     "prod": "pm2 start pm2.json"
   },
@@ -48,6 +47,8 @@
     "@types/node": "^12.11.6",
     "@types/redis": "^2.8.14",
     "@types/session-file-store": "^1.2.1",
-    "chokidar": "^3.2.2"
+    "chalk": "^2.4.2",
+    "chokidar": "^3.2.2",
+    "typescript": "^3.6.4"
   }
 }

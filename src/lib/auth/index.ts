@@ -1,5 +1,4 @@
-import { Request, NextFunction } from "express"
-import { Res } from "../../types/global"
+import { Request, Response, NextFunction } from "express"
 
 /**
  * 权限验证中间间
@@ -7,7 +6,7 @@ import { Res } from "../../types/global"
  */
 
 const Auth = (authKey: string) => {
-  return (req:Request, res:Res, next:NextFunction) => {
+  return (req: Request, res: Response, next: NextFunction) => {
     console.log('权限key: ', authKey)
     const loginUser = req.session.loginUser
     console.log('loginUser', loginUser)

@@ -1,11 +1,10 @@
 /**
  * 统一格式返回
  */
-import { Request, NextFunction } from 'express'
-import { Res } from '../../types/global'
+import { Request,Response, NextFunction } from 'express'
 
 export default () => {
-  return (req: Request, res: Res, next: NextFunction): void => {
+  return (req: Request, res: Response, next: NextFunction): void => {
     res.resp = {
       //  成功
       success(result: any, extData: object = {}) {

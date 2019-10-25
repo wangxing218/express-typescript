@@ -1,11 +1,10 @@
-import express,{ Request } from 'express'
+import express,{ Request,Response } from 'express'
 import mock from 'mockjs'
 import auth from '../lib/auth'
 import { check, validationResult, oneOf } from 'express-validator'
-import { Res } from '../types/global'
 const router = express.Router()
 
-router.get('/', auth('api.test'), async (req:Request, res:Res) => {
+router.get('/', auth('api.test'), async (req:Request, res:Response) => {
   req.app.locals.webtitle = '<b>这是个标题 </b>'
   var a = 100, b= 12321
   var c = b / a
@@ -34,7 +33,7 @@ router.post('/check', [
     check('tel').trim().isEmpty(),
     check('tel').isMobilePhone('zh-CN')
   ], '手机号错误')
-], (req:Request, res:Res) => {
+], (req:Request, res:Response) => {
   const errors = validationResult(req)
   if (!errors.isEmpty()) {
     const msg = errors.array()[0].msg
@@ -45,18 +44,18 @@ router.post('/check', [
 })
 
 
-router.get('/login', (req:Request, res:Res) => {
+router.get('/login', (req:Request, res:Response) => {
   req.session.loginUser = '张三'
   res.resp.success(req.session.loginUser)
 })
 
-router.get('/test', auth('api.test'), (req:Request, res:Res) => {
+router.get('/test', auth('api.test'), (req:Request, res:Response) => {
   var name = req.query.age
   res.resp.success(req.session.loginUser)
 })
 
 // mock数据
-router.get('/mock', (req:Request, res:Res) => {
+router.get('/mock', (req:Request, res:Response) => {
   const md5 = require('crypto').createHash('md5')
   let data = md5.update('123456').digest('hex')
   return res.resp.success(mock.mock({

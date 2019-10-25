@@ -1,4 +1,4 @@
-import express, { Request } from 'express'
+import express, { Request,Response } from 'express'
 import bodyParser from 'body-parser'
 import cookieParser from 'cookie-parser'
 import session from 'express-session'
@@ -10,7 +10,6 @@ import cache from './lib/cache'
 import response from './lib/response'
 import util from './lib/util'
 import config from './config'
-import { Res } from './types/global'
 const app = express()
 
 
@@ -66,12 +65,12 @@ import router from './config/router'
 router(app)
 
 // 404重定向，单页应用时可转发到首页
-app.get('*', (req: Request, res: Res) => {
+app.get('*', (req: Request, res: Response) => {
   res.sendFile(util.pathRoot('public/index.html'))
 })
 
 // 统一错误捕获
-app.use((err: Error, req: Request, res: Res) => {
+app.use((err: Error, req: Request, res: Response) => {
   console.warn('system has error：', err)
   res.resp.fail(err.toString())
 })

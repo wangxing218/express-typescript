@@ -3,7 +3,6 @@
  */
 import mysql from 'mysql'
 import config from '../../config'
-import { AppPoolConnection } from '../../types/global'
 
 const pool = mysql.createPool(config.db)
 
@@ -35,9 +34,9 @@ const query = (sql:string, args?: any):Promise<any> => {
 }
 
 // 执行事务
-const transaction = (handle:(conn:AppPoolConnection)=>Promise<any>) => {
+const transaction = (handle:(conn: PoolConnection)=>Promise<any>) => {
   return new Promise((resolve, reject) => {
-    pool.getConnection((err, conn: AppPoolConnection) => {
+    pool.getConnection((err, conn: PoolConnection) => {
       if (err) {
         console.warn(err)
         return reject(err)
