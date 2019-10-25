@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Home Index</title>
+</head>
+
+<body>
+  <h1>Welcome to home page!</h1>
+  <p>当前在线人数： <b id="users">0</b> </p>
+</body>
+<script>
+  var el = document.querySelector('#users')
+  const ws = new WebSocket('ws://' + location.host + '/api/ws')
+  ws.onopen = () => {
+    console.log('opened')
+  }
+  ws.onmessage = e => {
+    const msg = JSON.parse(e.data)
+    if (msg.count !== undefined) {
+      el.innerHTML = msg.count
+    }
+  }
+
+</script>
+
+</html>
