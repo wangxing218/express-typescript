@@ -76,7 +76,9 @@ router.post('/json', (req:Request, res:Response) => {
 
 // 获取列表
 router.get('/list', async (req:Request, res:Response) => {
-  const dataList = await userService.getList(parseInt(req.query.count))
+  const dataList = await userService.getList(parseInt(req.query.count)).catch(err=>{
+    res.resp.fail(err)
+  })
   res.resp.list(dataList.result, dataList.total)
 })
 

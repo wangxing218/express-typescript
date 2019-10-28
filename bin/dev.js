@@ -35,9 +35,9 @@ const logger = {
  * 一个延时的promise
  * @param {duration} 秒数
  */
-const deleyTime = (duration = 1) => {
+const deleyTime = (duration = 300) => {
   return new Promise(resolve => {
-    setTimeout(resolve, duration * 1000)
+    setTimeout(resolve, duration)
   })
 }
 

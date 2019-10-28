@@ -1,7 +1,17 @@
+/**
+ * redis缓存操作类
+ */
 import redis from 'redis'
 import config from '../../config'
 
 const client = redis.createClient(config.redis)
+
+// 日志记录
+client.on('connected', ()=>console.log('redis connected!'))
+client.on('error', err => {
+  console.error('redis error: ', err)
+  throw err
+})
 
 const Cache = {
   client,

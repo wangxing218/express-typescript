@@ -1,9 +1,13 @@
 import db from '../lib/db'
 import cache from '../lib/cache'
 
-const getList = async (count:number = 10) => {
+const getList = async (count: number = 10) => {
   const data = await cache.get('userList')
-  if (data) return data
+  if (data) {
+    console.log('走了缓存')
+    return data
+  }
+  console.log('无缓存')
   const result = await db.query(`
   select count(1) as total, name 
   from user 
@@ -20,6 +24,8 @@ const getList = async (count:number = 10) => {
   }
   cache.set('userList', resp, 20)
   return resp
+
+
 }
 
 const add = async (info: object) => {

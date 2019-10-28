@@ -50,7 +50,7 @@ app.use(bodyParser.urlencoded({
 }))
 
 app.use(response())
-app.use(express.static('../public'))
+app.use(express.static(util.pathRoot('public')))
 app.set('view engine', 'ejs')
 app.set('views', util.pathRoot('view'))
 if (app.get('env') === 'development') {

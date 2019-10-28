@@ -2,9 +2,6 @@
  * 系统配置接口
  */
 declare interface Config {
-  // 可添加任意配置项
-  // readonly [key:string]: any
-
   // 系统配置
   readonly system?:{
     // 绑定ip或域名
