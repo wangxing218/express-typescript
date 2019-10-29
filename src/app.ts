@@ -71,7 +71,7 @@ app.get('*', (req: Request, res: Response) => {
 
 // 统一错误捕获
 app.use((err: Error, req: Request, res: Response) => {
-  console.warn('system has error：', err)
+  console.warn('System has error：', err)
   res.resp.fail(err.toString())
 })
 

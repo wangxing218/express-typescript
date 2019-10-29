@@ -7,10 +7,15 @@ import config from '../../config'
 const client = redis.createClient(config.redis)
 
 // 日志记录
-client.on('connected', ()=>console.log('redis connected!'))
+let redisErr: redis.RedisError = null
+client.on('ready', ()=>{
+  redisErr = null
+  console.log('redis ready!')
+})
+client.on('reconnecting', ()=>console.warn('redis is reconnecting!'))
 client.on('error', err => {
+  redisErr = err
   console.error('redis error: ', err)
-  throw err
 })
 
 const Cache = {
@@ -21,9 +26,10 @@ const Cache = {
    * @returns {*} any
    */
   get(key: string): Promise<any> {
+    if(redisErr) return Promise.reject(redisErr)
     return new Promise(resolve => {
       client.get(key, (err, value) => {
-        if (err) return resolve(null)
+        if (err) return resolve(err)
         resolve(JSON.parse(value))
       })
     })
@@ -36,6 +42,7 @@ const Cache = {
    * @returns {*} boolean
    */
   set(key: string, value: any, duration?: number): Promise<boolean> {
+    if(redisErr) return Promise.reject(redisErr)
     return new Promise(resolve => {
       const callback = (err: Error, resp: string): void => {
         if (resp === 'OK') resolve(true)
@@ -54,6 +61,7 @@ const Cache = {
    * @param {*} ...keys
    */
   del(): Promise<Error | number> {
+    if(redisErr) return Promise.reject(redisErr)
     return new Promise((resolve, reject) => {
       client.del(...arguments, (err: Error, total: number) => {
         if (err) reject(err)
