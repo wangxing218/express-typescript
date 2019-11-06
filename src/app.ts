@@ -51,6 +51,7 @@ app.use(bodyParser.urlencoded({
 
 app.use(response())
 app.use(express.static(util.pathRoot('public')))
+app.enable('trust proxy')
 app.set('view engine', 'ejs')
 app.set('views', util.pathRoot('view'))
 if (app.get('env') === 'development') {

@@ -4,8 +4,8 @@ import auth from '../lib/auth'
 import { check, validationResult, oneOf } from 'express-validator'
 const router = express.Router()
 
-router.get('/', auth('api.test'), async (req:Request, res:Response) => {
-  req.app.locals.webtitle = '<b>这是个标题 </b>'
+router.get('/', async (req:Request, res:Response) => {
+  req.app.locals.webtitle = '<b>这是个标题: </b>' + req.ip
   var a = 100, b= 12321
   var c = b / a
 
