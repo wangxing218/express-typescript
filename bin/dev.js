@@ -93,7 +93,7 @@ const startApp = (callback) => {
       NODE_ENV: 'development'
     }
   })
-  logger.print('==   App\' new process.pid: ' + child.pid)
+  logger.print('==   App\'s new process.pid: ' + child.pid)
   logger.print('===================================')
 
   child.stdout.on('data', data => logger.info(data))
@@ -126,14 +126,14 @@ const startWatcher = () => {
     await deleyTime()
     // 做一个延时，防止未完全ready就开启触发兼听
     watcher.on('all', () => {
-      if (tick) return
+      if (tick) {
+        clearTimeout(tick)
+        tick = null
+      }
       tick = setTimeout(async () => {
         console.log(chalk.blue('==================================='))
         console.log(chalk.blue('==   App is restarting...'))
-        startApp(() => {
-          clearTimeout(tick)
-          tick = null
-        })
+        startApp()
       }, 1000)
     })
   })
