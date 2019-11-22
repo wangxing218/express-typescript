@@ -2,3 +2,4 @@ node_modules/
 /.temp
 /public/upload
 /dist
+*.log
