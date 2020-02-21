@@ -12,9 +12,18 @@ import util from './lib/util'
 import config from './config'
 const app = express()
 
+/**
+ * 设置
+ */
+app.enable('trust proxy')
+app.set('view engine', 'ejs')
+app.set('views', util.pathRoot('view'))
+if (app.get('env') === 'development') {
+  app.set('json spaces', 2)
+}
 
 /**
- * 组件设置
+ * 中间件
  */
 app.use(helmet())
 app.use(cookieParser())
@@ -43,27 +52,20 @@ if(config.session.type === 'redis'){
     name: config.session.name
   }))
 }
-
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({
   extended: false
 }))
-
 app.use(response())
 app.use(express.static(util.pathRoot('public')))
-app.enable('trust proxy')
-app.set('view engine', 'ejs')
-app.set('views', util.pathRoot('view'))
-if (app.get('env') === 'development') {
-  // json美化
-  app.set('json spaces', 2)
-}
+
 
 // 开启websocket,之后才能引入路由
 expressWs(app)
 // 路由
 import router from './config/router'
 router(app)
+
 
 // 404重定向，单页应用时可转发到首页
 app.get('*', (req: Request, res: Response) => {
