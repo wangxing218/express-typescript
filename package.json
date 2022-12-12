@@ -16,7 +16,7 @@
     "connect-redis": "^4.0.2",
     "cookie-parser": "^1.4.4",
     "ejs": "^2.7.1",
-    "express": "^4.17.1",
+    "express": "^4.17.3",
     "express-session": "^1.16.2",
     "express-validator": "^6.2.0",
     "express-ws": "^4.0.0",
